@@ -1,0 +1,13 @@
+{
+    "name": "b1PWA",
+    "short_name": "b1PWA",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "description": "B1 PWA.",
+    "icons": [{
+        "src": "icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }]
+}
