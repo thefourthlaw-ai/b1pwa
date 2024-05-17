@@ -4,11 +4,7 @@ const urlsToCache = [
   './index.html',
   './manifest.json',
   './service-worker.js',
-  './icon.png',
-  './qr1.png',
-  './qr2.png',
-  './qr3.png',
-  './404.html'
+  './icon.png'
 ];
 
 self.addEventListener('install', event => {
@@ -28,10 +24,15 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        return fetch(event.request).catch(() => {
-          if (event.request.mode === 'navigate') {
-            return caches.match('./404.html');
+        return fetch(event.request).then(networkResponse => {
+          // Cache the dynamically fetched QR code images
+          if (event.request.url.includes('qr/')) {
+            return caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, networkResponse.clone());
+              return networkResponse;
+            });
           }
+          return networkResponse;
         });
       })
   );
