@@ -28,7 +28,7 @@
       margin-top: 20px;
       padding: 0 20px;
     }
-    input[type="number"],
+    input[type="text"],
     button {
       width: calc(100% - 40px);
       padding: 15px;
@@ -79,7 +79,7 @@
 <body>
   <h1>Stus7B1</h1>
   <div class="input-container">
-    <input type="number" id="numberInput" placeholder="Enter a number">
+    <input type="text" id="textInput" placeholder="Enter a name">
     <button onclick="handleButtonClick()">Submit</button>
   </div>
 
@@ -91,14 +91,14 @@
 
   <script>
     function handleButtonClick() {
-      const numberInput = document.getElementById('numberInput').value;
+      const textInput = document.getElementById('textInput').value.trim();
       const qrImage = document.getElementById('qrImage');
 
-      if (numberInput && numberInput >= 1 && numberInput <= 3) {
-        qrImage.src = `qr${numberInput}.png`;
+      if (textInput) {
+        qrImage.src = `qr/${textInput}.png`;
         document.getElementById('myModal').style.display = "flex";
       } else {
-        alert("Please enter a number between 1 and 3.");
+        alert("Please enter a name.");
       }
     }
 
