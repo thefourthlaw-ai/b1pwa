@@ -1,10 +1,10 @@
 {
-    "name": "b1PWA",
-    "short_name": "b1PWA",
+    "name": "Stus7B1",
+    "short_name": "Stus7B1",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",
-    "description": "B1 PWA.",
+    "description": "Stus7B1 qr activator",
     "icons": [{
         "src": "icon.png",
         "sizes": "192x192",
