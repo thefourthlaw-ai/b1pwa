@@ -4,20 +4,32 @@ const urlsToCache = [
   './index.html',
   './manifest.json',
   './service-worker.js',
-  './icon.png'
+  './icon.png',
+  './qr-list.json'
 ];
 
-// Install service worker and cache initial assets
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       console.log('Opened cache');
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache).then(() => {
+        return fetch('./qr-list.json').then(response => response.json()).then(qrList => {
+          return Promise.all(
+            qrList.map(qrName => {
+              const qrUrl = `./qr/${qrName}`;
+              return fetch(qrUrl).then(qrResponse => {
+                if (qrResponse.ok) {
+                  return cache.put(qrUrl, qrResponse);
+                }
+              });
+            })
+          );
+        });
+      });
     })
   );
 });
 
-// Fetch event to handle dynamic caching of QR codes
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -37,7 +49,6 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event to clear old caches
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -51,9 +62,4 @@ self.addEventListener('activate', event => {
       );
     })
   );
-});
-
-// Force service worker to update immediately
-self.addEventListener('controllerchange', () => {
-  window.location.reload();
 });

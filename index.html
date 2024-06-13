@@ -92,9 +92,9 @@
       const textInput = document.getElementById('textInput').value;
 
       if (textInput) {
-        checkImageExists(`qr/${textInput}.png`, exists => {
+        checkImageExists(`./qr/${textInput}.png`, exists => {
           if (exists) {
-            document.getElementById('qrImage').src = `qr/${textInput}.png`;
+            document.getElementById('qrImage').src = `./qr/${textInput}.png`;
             document.getElementById('myModal').style.display = "flex";
           } else {
             alert("QR code does not exist.");
@@ -126,17 +126,6 @@
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
-
-          registration.onupdatefound = () => {
-            const installingWorker = registration.installing;
-            installingWorker.onstatechange = () => {
-              if (installingWorker.state === 'installed') {
-                if (navigator.serviceWorker.controller) {
-                  window.location.reload();
-                }
-              }
-            };
-          };
         }, function(error) {
           console.log('ServiceWorker registration failed: ', error);
         });
