@@ -7,6 +7,7 @@ const urlsToCache = [
   './icon.png'
 ];
 
+// Install service worker and cache initial assets
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -16,6 +17,7 @@ self.addEventListener('install', event => {
   );
 });
 
+// Fetch event to handle dynamic caching of QR codes
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -35,6 +37,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
+// Activate event to clear old caches
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -48,4 +51,9 @@ self.addEventListener('activate', event => {
       );
     })
   );
+});
+
+// Force service worker to update immediately
+self.addEventListener('controllerchange', () => {
+  window.location.reload();
 });
