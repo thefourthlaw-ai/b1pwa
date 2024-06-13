@@ -8,28 +8,19 @@ const urlsToCache = [
   './qr-list.json'
 ];
 
+// Install event: Cache essential files and QR codes
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Opened cache');
-      return cache.addAll(urlsToCache).then(() => {
-        return fetch('./qr-list.json').then(response => response.json()).then(qrList => {
-          return Promise.all(
-            qrList.map(qrName => {
-              const qrUrl = `./qr/${qrName}`;
-              return fetch(qrUrl).then(qrResponse => {
-                if (qrResponse.ok) {
-                  return cache.put(qrUrl, qrResponse);
-                }
-              });
-            })
-          );
-        });
+      return fetch('./qr-list.json').then(response => response.json()).then(qrList => {
+        const qrUrls = qrList.map(qrName => `./qr/${qrName}`);
+        return cache.addAll(urlsToCache.concat(qrUrls));
       });
     })
   );
 });
 
+// Fetch event: Serve cached content when offline
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -49,6 +40,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
+// Activate event: Clean up old caches
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
