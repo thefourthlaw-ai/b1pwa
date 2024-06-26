@@ -91,9 +91,10 @@
       const textInput = document.getElementById('textInput').value;
 
       if (textInput) {
-        checkImageExists(`./qr/${textInput}.png`, exists => {
+        const imageUrl = `https://raw.githubusercontent.com/thefourthlaw-ai/b1pwa/main/qr/${textInput}.png`;
+        checkImageExists(imageUrl, exists => {
           if (exists) {
-            document.getElementById('qrImage').src = `./qr/${textInput}.png`;
+            document.getElementById('qrImage').src = imageUrl;
             document.getElementById('myModal').style.display = "flex";
           } else {
             alert("QR code does not exist.");
