@@ -91,7 +91,7 @@
       const textInput = document.getElementById('textInput').value;
 
       if (textInput) {
-        const imageUrl = `https://raw.githubusercontent.com/thefourthlaw-ai/b1pwa/main/qr/${textInput}.png`;
+        const imageUrl = `https://raw.githubusercontent.com/thefourthlaw-ai/b1pwa/main/qr/${textInput}.png?timestamp=${new Date().getTime()}`;
         checkImageExists(imageUrl, exists => {
           if (exists) {
             document.getElementById('qrImage').src = imageUrl;
