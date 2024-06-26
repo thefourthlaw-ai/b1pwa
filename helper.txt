@@ -1,1 +1,1 @@
-surge . b1wpa.surge.sh
+surge . b1pwa.surge.sh
