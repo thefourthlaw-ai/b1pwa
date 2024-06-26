@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stus7B1</title>
-  <link rel="manifest" href="manifest.json">
   <style>
     body {
       display: flex;
@@ -120,16 +119,6 @@
 
     window.onload = function() {
       document.getElementById('myModal').style.display = "none";
-    }
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function(error) {
-          console.log('ServiceWorker registration failed: ', error);
-        });
-      });
     }
   </script>
 </body>
